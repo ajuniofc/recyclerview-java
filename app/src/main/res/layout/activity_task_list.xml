@@ -1,38 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.ajuniofc.recyclerviewjava.ui.activity.TaskListActivity">
+    tools:context=".ui.activity.TaskListActivity">
 
-    <ListView
-        android:id="@+id/task_list_list"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/task_list_add_task"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/task_item" />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/task_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-    <View android:id="@+id/lista_notas_fundo_gradiente_inferior"
-        android:layout_width="0dp"
-        android:layout_height="5dp"
-        android:background="@drawable/baclground_add_task"
-        app:layout_constraintBottom_toTopOf="@id/task_list_add_task"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <ImageButton
+        android:id="@+id/task_list_add_button"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:textColor="@color/white"
+        android:textSize="40sp"
+        android:textAlignment="center"
+        android:elevation="6dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/add_task_background"
+        android:src="@drawable/ic_add_task"
+        android:stateListAnimator="@null"/>
 
-    <TextView
-        android:id="@+id/task_list_add_task"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:padding="10dp"
-        android:text="Inserir uma nota"
-        android:textColor="@android:color/darker_gray"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>
