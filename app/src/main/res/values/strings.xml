@@ -9,5 +9,6 @@
     <string name="task_list_ADD">+</string>
     <string name="form_activity_title">Nova Tarefa</string>
     <string name="form_task_menu_save">Salvar</string>
+    <string name="invalid_field">Campo inválido</string>
 </resources>
 

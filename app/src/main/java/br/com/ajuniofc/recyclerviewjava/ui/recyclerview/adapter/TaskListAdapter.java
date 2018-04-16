@@ -37,6 +37,11 @@ public class TaskListAdapter extends RecyclerView.Adapter<TaskListAdapter.TaskVi
         return tasks.size();
     }
 
+    public void add(Task task){
+        tasks.add(task);
+        notifyDataSetChanged();
+    }
+
     class TaskViewHolder extends RecyclerView.ViewHolder {
 
         private final TextView title;

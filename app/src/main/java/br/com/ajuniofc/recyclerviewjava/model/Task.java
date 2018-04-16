@@ -1,9 +1,10 @@
 package br.com.ajuniofc.recyclerviewjava.model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Task {
+public class Task implements Serializable{
 
     private final String title;
     private final String description;
@@ -28,7 +29,11 @@ public class Task {
     }
 
     public String getStringDate(){
-        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-        return format.format(this.date.getTime());
+        if (date != null) {
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+            return format.format(this.date.getTime());
+        }else {
+            return null;
+        }
     }
 }

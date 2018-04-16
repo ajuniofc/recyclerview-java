@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -23,10 +24,14 @@ import br.com.ajuniofc.recyclerviewjava.model.Task;
 import br.com.ajuniofc.recyclerviewjava.ui.recyclerview.adapter.TaskListAdapter;
 
 public class TaskListActivity extends AppCompatActivity implements View.OnClickListener {
+    public static final int REQUEST_CODE = 123;
+    public static final String TASK_KEY = "task";
     private RecyclerView recyclerView;
     private TaskDAO dao;
     private ImageButton addButton;
     private ListType listType;
+    private TaskListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,11 +47,6 @@ public class TaskListActivity extends AppCompatActivity implements View.OnClickL
 
     private void setupRecyclerView() {
         recyclerView = findViewById(R.id.task_list);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
         configRecyclerView();
     }
 
@@ -71,17 +71,9 @@ public class TaskListActivity extends AppCompatActivity implements View.OnClickL
 
 
     private void setAdapter() {
-        recyclerView.setAdapter(new TaskListAdapter(list()));
-    }
-
-    private List<Task> list() {
-        List<Task> list = new ArrayList<>();
-        list.add(new Task( "Tarefa 1",  "Descricao teste da tarefa",  Calendar.getInstance()));
-        list.add(new Task( "Tarefa 2",  "Descricao teste da tarefa 2 para verificar o tamanho da nota",  Calendar.getInstance()));
-        list.add(new Task( "Tarefa 3",  "Descricao",  Calendar.getInstance()));
-        list.add(new Task( "Tarefa 4",  "Desc",  Calendar.getInstance()));
-        list.add(new Task( "Tarefa 5",  "Descricao muito louca para verificar o quanto esse layout é massa haha",  Calendar.getInstance()));
-        return list;
+        List<Task> tasks = new TaskDAO().findAll();
+        adapter = new TaskListAdapter(tasks);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -94,7 +86,18 @@ public class TaskListActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void goToForm() {
-        startActivity(new Intent(this, FormTaskActivity.class));
+        startActivityForResult(new Intent(this, FormTaskActivity.class), REQUEST_CODE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK && data.hasExtra(TASK_KEY)){
+            Task task = (Task) data.getSerializableExtra(TASK_KEY);
+            new TaskDAO().insert(task);
+            adapter.add(task);
+        }
+
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
